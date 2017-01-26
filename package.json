@@ -1,0 +1,14 @@
+{
+  "name": "express-basics",
+  "description": "A lightweight package to turn the 3 regular express arguments into one with some additional enhancements.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ezzygemini/express-basics.git"
+  },
+  "license": "MIT",
+  "version": "0.1.0",
+  "dependencies": {
+    "body": "^5.1.0",
+    "true-typeof": "git+https://github.com/ezzygemini/true-typeof.git"
+  }
+}
