@@ -9,6 +9,6 @@
   "version": "0.1.0",
   "dependencies": {
     "body": "^5.1.0",
-    "true-typeof": "git+https://github.com/ezzygemini/true-typeof.git"
+    "true-typeof": "git:github.com:ezzygemini/true-typeof.git"
   }
 }
