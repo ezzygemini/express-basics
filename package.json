@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "body": "^5.1.0",
-    "true-typeof": "git://github.com/ezzygemini/true-typeof.git"
+    "true-typeof": "ezzygemini/true-typeof"
   },
   "devDependencies": {
     "express": "^4.14.1",
-    "testing": "git://github.com/ezzygemini/testing.git"
+    "testing": "ezzygemini/testing"
   }
 }
