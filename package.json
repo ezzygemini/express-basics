@@ -11,11 +11,11 @@
     "test": "node node_modules/testing"
   },
   "dependencies": {
+    "express": "^4.14.1",
     "body": "^5.1.0",
     "true-typeof": "ezzygemini/true-typeof"
   },
   "devDependencies": {
-    "express": "^4.14.1",
     "testing": "ezzygemini/testing"
   }
 }
