@@ -1,12 +1,17 @@
 {
   "name": "ezzy-express-basics",
   "description": "A lightweight package to turn the 3 regular express arguments into one with some additional enhancements.",
+  "version": "0.1.10",
+  "author": {
+    "name": "Moises Romero",
+    "url": "http://ezzygemini.com",
+    "email": "ezzygemini@gmail.com"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ezzygemini/express-basics.git"
+    "url": "https://github.com/ezzygemini/ezzy-express-basics.git"
   },
   "license": "MIT",
-  "version": "0.1.1",
   "scripts": {
     "test": "node node_modules/ezzy-testing"
   },
