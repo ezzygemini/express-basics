@@ -1,21 +1,21 @@
 {
-  "name": "express-basics",
+  "name": "ezzy-express-basics",
   "description": "A lightweight package to turn the 3 regular express arguments into one with some additional enhancements.",
   "repository": {
     "type": "git",
     "url": "https://github.com/ezzygemini/express-basics.git"
   },
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
-    "test": "node node_modules/testing"
+    "test": "node node_modules/ezzy-testing"
   },
   "dependencies": {
-    "express": "^4.14.1",
     "body": "^5.1.0",
-    "true-typeof": "ezzygemini/true-typeof"
+    "express": "^4.14.1",
+    "ezzy-typeof": "0.0.1"
   },
   "devDependencies": {
-    "testing": "ezzygemini/testing"
+    "ezzy-testing": "^0.1.2"
   }
 }
