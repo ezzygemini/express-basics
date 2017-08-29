@@ -1,6 +1,6 @@
-const trueTypeOf = require('true-typeof');
+const trueTypeOf = require('ezzy-typeof');
 const express = require('express');
-const request = require('testing/request');
+const request = require('ezzy-testing/request');
 const ExpressBasics = require('./ExpressBasics');
 let app;
 

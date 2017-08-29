@@ -1,5 +1,5 @@
 const jsonBody = require('body/json');
-const trueTypeOf = require('true-typeof');
+const trueTypeOf = require('ezzy-typeof');
 
 /**
  * @typedef {Object} IncomingMessage
