@@ -1,7 +1,7 @@
 {
   "name": "ezzy-express-basics",
   "description": "A lightweight package to turn the 3 regular express arguments into one with some additional enhancements.",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "author": {
     "name": "Moises Romero",
     "url": "http://ezzygemini.com",
