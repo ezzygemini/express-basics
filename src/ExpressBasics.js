@@ -16,10 +16,20 @@ const trueTypeOf = require('ezzy-typeof');
  * @property {Function} next The next route handler.
  * @property {Function} use The shorthand to bind middleware to the handler.
  * @property {Function} body A function that returns a promise to get the body.
+ * @property {Function} i18n A shorthand function that uses i18n module to
+ * translate multiple strings at once.
  */
 
+/**
+ * A class that turns express arguments (req, res, next) into one
+ * single object to make it easy to pass around from method to method.
+ */
 class ExpressBasics {
 
+  /**
+   * Constructor.
+   * @param {express} express The express instance.
+   */
   constructor(express) {
     this.express = express;
 
@@ -32,11 +42,27 @@ class ExpressBasics {
     }
   }
 
+  /**
+   * The methods that sends references to the express arguments.
+   * @param {Function} mainHandler The handler of the route.
+   * @returns {function(*=, *=, *=): *}
+   * @private
+   */
   _handler(mainHandler) {
     return (request, response, next) => mainHandler({
       request,
       response,
       next,
+      i18n: (...args) => {
+        for (let i = 0; i < args.length; i++) {
+          if (Array.isArray(args[i])) {
+            args[i] = request.i18n.__(...args[i]);
+          } else {
+            args[i] = request.i18n.__(args[i]);
+          }
+        }
+        return args.length === 1 ? args[1] : args;
+      },
       use: handler => handler(request, response, next),
       body: () => new Promise((resolve, reject) => {
         if (request.method === 'GET' && request.query.body) {
@@ -82,7 +108,7 @@ class ExpressBasics {
    * @param {*} args Any number of arguments.
    * @returns {*}
    */
-  get(...args) {
+  get (...args) {
     return this._wrap('get', args);
   }
 

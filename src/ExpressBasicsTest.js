@@ -16,6 +16,7 @@ describe('ExpressBasics', () => {
     expect(app.post).toBeDefined();
     expect(app.delete).toBeDefined();
     expect(app.listen).toBeDefined();
+    expect(app.i18n).toBeDefined();
   });
 
   describe('HttpBasics', () => {
