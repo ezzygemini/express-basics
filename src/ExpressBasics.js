@@ -61,7 +61,7 @@ class ExpressBasics {
             args[i] = request.i18n.__(args[i]);
           }
         }
-        return args.length === 1 ? args[1] : args;
+        return args;
       },
       use: handler => handler(request, response, next),
       body: () => new Promise((resolve, reject) => {
