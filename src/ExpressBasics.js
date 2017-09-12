@@ -53,16 +53,6 @@ class ExpressBasics {
       request,
       response,
       next,
-      i18n: (...args) => {
-        for (let i = 0; i < args.length; i++) {
-          if (Array.isArray(args[i])) {
-            args[i] = request.i18n.__(...args[i]);
-          } else {
-            args[i] = request.i18n.__(args[i]);
-          }
-        }
-        return args;
-      },
       use: handler => handler(request, response, next),
       body: () => new Promise((resolve, reject) => {
         if (request.method === 'GET' && request.query.body) {
