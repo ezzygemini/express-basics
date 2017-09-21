@@ -22,10 +22,9 @@
   "dependencies": {
     "body": "^5.1.0",
     "express": "^4.14.1",
-    "ezzy-testing": "^0.1.18",
     "ezzy-typeof": "0.0.1"
   },
   "devDependencies": {
-    "ezzy-testing": "^0.1.16"
+    "ezzy-testing": "^0.1.18"
   }
 }
