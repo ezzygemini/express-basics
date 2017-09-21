@@ -25,6 +25,6 @@
     "ezzy-typeof": "0.0.1"
   },
   "devDependencies": {
-    "ezzy-testing": "^0.1.2"
+    "ezzy-testing": "^0.1.16"
   }
 }
