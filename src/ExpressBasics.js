@@ -1,4 +1,4 @@
-const jsonBody = require('body/json');
+const bodyParser = require('body');
 const trueTypeOf = require('ezzy-typeof');
 
 /**
@@ -55,14 +55,28 @@ class ExpressBasics {
       next,
       use: handler => handler(request, response, next),
       body: () => new Promise((resolve, reject) => {
+        if (request.body) {
+          return resolve(request.body);
+        }
         if (request.method === 'GET' && request.query.body) {
           try {
-            return resolve(JSON.parse(request.query.body));
-          } catch (e) {
-            return reject(e);
+            request.body = JSON.parse(request.query.body);
+            resolve(request.body);
+          } catch (error) {
+            request.body = request.query.body;
+            reject(error);
           }
+          return;
         }
-        jsonBody(request, response, (e, body) => e ? reject(e) : resolve(body));
+        bodyParser(request, response, (e, body) => {
+          try {
+            request.body = JSON.parse(body);
+            resolve(request.body);
+          } catch (error) {
+            request.body = body;
+            reject(error);
+          }
+        });
       })
     });
   }
@@ -98,7 +112,7 @@ class ExpressBasics {
    * @param {*} args Any number of arguments.
    * @returns {*}
    */
-  get (...args) {
+  get(...args) {
     return this._wrap('get', args);
   }
 
