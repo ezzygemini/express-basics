@@ -1,5 +1,11 @@
-const bodyParser = require('body');
-const trueTypeOf = require('ezzy-typeof');
+const bodyParser = require("body");
+const trueTypeOf = require("ezzy-typeof");
+
+/**
+ * Default size of the json file.
+ * @type {number}
+ */
+const TEN_MB = 1024 * 1024 * 10;
 
 /**
  * @typedef {Object} IncomingMessage
@@ -25,7 +31,6 @@ const trueTypeOf = require('ezzy-typeof');
  * single object to make it easy to pass around from method to method.
  */
 class ExpressBasics {
-
   /**
    * Constructor.
    * @param {express} express The express instance.
@@ -35,8 +40,11 @@ class ExpressBasics {
 
     // Expose any properties and methods
     for (let prop in express) {
-      if (express.hasOwnProperty(prop) && !this[prop] &&
-        trueTypeOf(express[prop], 'function')) {
+      if (
+        express.hasOwnProperty(prop) &&
+        !this[prop] &&
+        trueTypeOf(express[prop], "function")
+      ) {
         this[prop] = (...args) => express[prop].apply(express, args);
       }
     }
@@ -49,36 +57,38 @@ class ExpressBasics {
    * @private
    */
   _handler(mainHandler) {
-    return (request, response, next) => mainHandler({
-      request,
-      response,
-      next,
-      use: handler => handler(request, response, next),
-      body: () => new Promise((resolve, reject) => {
-        if (request.body) {
-          return resolve(request.body);
-        }
-        if (request.method === 'GET' && request.query.body) {
-          try {
-            request.body = JSON.parse(request.query.body);
-            resolve(request.body);
-          } catch (error) {
-            request.body = request.query.body;
-            reject(error);
-          }
-          return;
-        }
-        bodyParser(request, response, (e, body) => {
-          try {
-            request.body = JSON.parse(body);
-            resolve(request.body);
-          } catch (error) {
-            request.body = body;
-            reject(error);
-          }
-        });
-      })
-    });
+    return (request, response, next) =>
+      mainHandler({
+        request,
+        response,
+        next,
+        use: handler => handler(request, response, next),
+        body: ({ limit = TEN_MB } = {}) =>
+          new Promise((resolve, reject) => {
+            if (request.body) {
+              return resolve(request.body);
+            }
+            if (request.method === "GET" && request.query.body) {
+              try {
+                request.body = JSON.parse(request.query.body);
+                resolve(request.body);
+              } catch (error) {
+                request.body = request.query.body;
+                reject(error);
+              }
+              return;
+            }
+            bodyParser(request, response, { limit }, (e, body) => {
+              try {
+                request.body = JSON.parse(body);
+                resolve(request.body);
+              } catch (error) {
+                request.body = body;
+                reject(error);
+              }
+            });
+          })
+      });
   }
 
   /**
@@ -93,9 +103,12 @@ class ExpressBasics {
     if (args[0] === null) {
       args = args.slice(1);
     }
-    return this.express[method]
-      .apply(this.express, args.slice(0, args.length - 1)
-        .concat(this._handler(args[args.length - 1])))
+    return this.express[method].apply(
+      this.express,
+      args
+        .slice(0, args.length - 1)
+        .concat(this._handler(args[args.length - 1]))
+    );
   }
 
   /**
@@ -104,7 +117,7 @@ class ExpressBasics {
    * @returns {*}
    */
   use(...args) {
-    return this._wrap('use', args);
+    return this._wrap("use", args);
   }
 
   /**
@@ -113,7 +126,7 @@ class ExpressBasics {
    * @returns {*}
    */
   get(...args) {
-    return this._wrap('get', args);
+    return this._wrap("get", args);
   }
 
   /**
@@ -122,7 +135,7 @@ class ExpressBasics {
    * @returns {*}
    */
   post(...args) {
-    return this._wrap('post', args);
+    return this._wrap("post", args);
   }
 
   /**
@@ -131,7 +144,7 @@ class ExpressBasics {
    * @returns {*}
    */
   delete(...args) {
-    return this._wrap('delete', args);
+    return this._wrap("delete", args);
   }
 
   /**
@@ -141,7 +154,6 @@ class ExpressBasics {
   listen(...args) {
     return this.express.listen.apply(this.express, args);
   }
-
 }
 
 module.exports = ExpressBasics;
